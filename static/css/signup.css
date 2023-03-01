@@ -82,3 +82,9 @@ form .submit button:hover {
 .other-action a:hover {
     text-decoration: underline;
 }
+
+.error h5 {
+    text-align: center;
+    margin: 0.2rem;
+    color: red;
+  }

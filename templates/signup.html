@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-  <title>TODO</title>
+  <title>Sign-up</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
-  <link rel="stylesheet" href="/static/css/main.css">
-  <link rel="stylesheet" href="/static/css/signup.css" />
+  <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', path='css/signup.css') }}" />
 </head>
 
 <body>
@@ -15,11 +15,18 @@
       <header class="login-header">
         <h2>SIGN-UP</h2>
       </header>
+      {% if errors|length > 0 %}
+      {% for error in errors %}
+      <div class="error" style="text-align: center;color: red;margin: 0.2rem;">
+        <h5>{{ error }}</h5>
+      </div>
+      {% endfor %}
+      {% endif %}
       <div class="login-form">
-        <form action="/login" method="POST">
+        <form action="/signup" method="POST" enctype="application/x-www-form-urlencoded">
           <div class="name">
             <label for="name">Name</label>
-            <input class="form-input" type="text" value="" name="name">
+            <input class="form-input" type="text" value="" name="username">
           </div>
           <div class="email">
             <label for="email">Email</label>
@@ -36,7 +43,7 @@
       </div>
       <div class="other-action">
         <div>
-          <a href="/login">Login</a>
+          <a href="/">Login</a>
         </div>
       </div>
     </div>

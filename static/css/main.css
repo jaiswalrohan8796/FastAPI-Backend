@@ -31,3 +31,9 @@
     border-radius: 0.8rem;
     box-shadow: 4px 4px 16px #a5a5a5;
   }
+
+  .error h5 {
+    text-align: center;
+    margin: 0.2rem;
+    color: red;
+  }

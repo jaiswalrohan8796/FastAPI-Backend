@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: black;
+  background-color: white;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-content {
+  background-color: rgb(138, 243, 243);
+  margin: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  width: 80vw;
+  border-radius: 0.8rem;
+}
+
+.todo-header {
+  text-align: center;
+  color: rgb(46, 45, 45);
+  font-size: 2rem;
+}
+.todo-header h2 {
+  margin: 0.4rem;
+}
+.new-todo-content {
+  background-color: rgb(207, 228, 224);
+}
+.new-todo-content form {
+  padding: 0.1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  border-radius: 0.2rem;
+}
+
+.new-todo-content-text {
+  width: 100%;
+}
+.new-todo-content-text input:focus {
+  border: 1px aqua solid;
+}
+.new-todo-content input {
+  height: 2rem;
+  width: 100%;
+  border-radius: 0.2rem;
+  border: none;
+}
+
+.new-todo-content button {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.3rem;
+  border: none;
+  font-size: 1.4rem;
+}
+.new-todo-content button:hover {
+  background-color: rgb(233, 223, 223);
+}
+
+.todo-content-list {
+  padding: 0rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.todo-content-list li {
+  background-color: antiquewhite;
+  list-style: none;
+  min-height: 2rem;
+  height: auto;
+  width: 100%;
+  padding: 0.1rem;
+  margin: 0.1rem 0rem;
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo-content-list li .item-action {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  width: auto;
+  min-width: 2rem;
+  height: 3rem;
+  border-radius: 0.2rem;
+}
+.todo-content-list li .item-action div {
+  background-color: blueviolet;
+  border-radius: 0.2rem;
+  margin: 0rem 0.1rem;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.todo-content-list .item-action div button {
+  border: 1px rgb(187, 187, 187) solid;
+  border-radius: 0.2rem;
+}
+.todo-content-list .item-action div button:hover {
+  background-color: rgb(184, 184, 184);
+}

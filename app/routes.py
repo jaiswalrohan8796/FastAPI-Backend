@@ -6,15 +6,21 @@ templates = Jinja2Templates(directory="templates")
 api_router = APIRouter()
 
 
-# =========== Routes ==============
+# =========== GET Routes ==============
 
 # Home Page (Login)
 @api_router.get("/", tags=["Home"])
 async def home(request: Request):
-	return templates.TemplateResponse("login.html", {"request": request})
-
+    return templates.TemplateResponse("login.html", {"request": request})
+# Login
+@api_router.get("/login", tags=["Login"])
+async def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
 # Signup Page
-@api_router.post("/signup", tags=["Signup"])
-async def signup(data, request: Request):
-	return templates.TemplateResponse("signup.html", {"data": data})
+@api_router.get("/signup", tags=["Signup"])
+async def signup(request: Request):
+    return templates.TemplateResponse("signup.html", {"request": request})
+
+
+# =============== POST Routes ==========================
 

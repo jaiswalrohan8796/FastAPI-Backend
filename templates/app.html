@@ -13,11 +13,12 @@
     <main>
         <div class="main-content">
             <header class="todo-header">
-                <h6>Hello, Rohan</h6>
+                <h6>Hello, {{ user.username }}</h6>
                 <h2>TODO</h2>
             </header>
             <div class="new-todo-content">
-                <form action="/add" , method="POST">
+                <form action="/app/add-todo" , method="POST">
+                    <input type="hidden" id="token-input" name="token" value="{{ token }}">
                     <div class="new-todo-content-text">
                         <input type="text" , name="decs" value="" placeholder="Go for groceries" />
                     </div>
@@ -27,83 +28,35 @@
                 </form>
             </div>
             <div class="todo-content">
+                {% if user.todos|length > 0 %}
                 <ol class="todo-content-list">
+                    {% for todo in user.todos %}
                     <li class="todo-content-item">
                         <div class="item-name">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nulla aliquam minima
-                                natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                Accusamus nulla
-                                aliquam minima natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente?</p>
+                            <input type="hidden" id="{{todo.id}}" name="todo-id" value="{{ todo.id }}">
+                            <p>{{ todo.desc }}</p>
                         </div>
                         <div class="item-action">
                             <div class="item-action-edit"><button>edit</button></div>
                             <div class="item-action-delete"><button>del</button></div>
                         </div>
                     </li>
-                    <li class="todo-content-item">
-                        <div class="item-name">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nulla aliquam minima
-                                natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                Accusamus nulla
-                                aliquam minima natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente?</p>
-                        </div>
-                        <div class="item-action">
-                            <div class="item-action-edit"><button>edit</button></div>
-                            <div class="item-action-delete"><button>del</button></div>
-                        </div>
-                    </li>
-                    <li class="todo-content-item">
-                        <div class="item-name">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nulla aliquam minima
-                                natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                Accusamus nulla
-                                aliquam minima natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente?</p>
-                        </div>
-                        <div class="item-action">
-                            <div class="item-action-edit"><button>edit</button></div>
-                            <div class="item-action-delete"><button>del</button></div>
-                        </div>
-                    </li>
-                    <li class="todo-content-item">
-                        <div class="item-name">
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus nulla aliquam minima
-                                natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                                Accusamus nulla
-                                aliquam minima natus
-                                dignissimos fugiat et rerum amet, nobis iste eum magni quam ipsa ad exercitationem
-                                praesentium sequi
-                                reprehenderit sapiente?</p>
-                        </div>
-                        <div class="item-action">
-                            <div class="item-action-edit"><button>edit</button></div>
-                            <div class="item-action-delete"><button>del</button></div>
-                        </div>
-                    </li>
+                    {% endfor %}
                 </ol>
+                {% else %}
+                <div class="empty-todo">
+                    <h4 style="text-align: center;margin: 0.2rem;">No todos</h4>
+                </div>
+                {% endif %}
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script>
+        const token = Cookies.get("token");
+        console.log(token)
+        document.getElementById("token-input").value = token;
+    </script>
 </body>
 
 </html>

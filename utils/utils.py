@@ -1,5 +1,12 @@
 from validate_email import validate_email
+from dotenv import dotenv_values
 import bcrypt
+import os
+from datetime import datetime, timedelta
+from typing import Union, Any
+from jose import jwt
+
+config = dotenv_values()
 
 
 def validate_signup_data(data):
@@ -46,3 +53,15 @@ def make_new_user_dict(username, email, hashed_password):
         "password": hashed_password,
         "todos": []
     }
+
+
+def create_access_token(subject: Union[str, Any]) -> str:
+    token_expire_mins = config["JWT_ACCESS_TOKEN_EXPIRE_MINUTES"]
+    expires_delta = float(
+        token_expire_mins) if token_expire_mins is not None else 30
+    to_encode = {"exp": datetime.utcnow(
+    ) + timedelta(minutes=expires_delta), "sub": str(subject)}
+    encoded_jwt = jwt.encode(
+        to_encode, config["JWT_SECRET_KEY"], config["JWT_ALGORITHM"])
+    return encoded_jwt
+

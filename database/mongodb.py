@@ -1,6 +1,7 @@
 from dotenv import dotenv_values
 from pymongo import MongoClient
 from typing import Dict
+from uuid import uuid4
 
 config: Dict = dotenv_values()
 
@@ -19,3 +20,23 @@ async def insert_user(user_dict):
 async def find_user_with_email(user_email):
     user = USER_COLLECTION.find_one({"email": user_email})
     return user
+
+
+async def delete_todo_by_id(email, todo_id):
+    filter = {"email": email}
+    delete_todo_operation = {"$pull": {"todos": {"id": todo_id}}}
+    res = USER_COLLECTION.update_one(
+        filter=filter, update=delete_todo_operation)
+    if res.modified_count == 1:
+        return True
+    return False
+
+
+async def add_todo(email, todo_text):
+    filter = {"email": email}
+    add_todo_operation = {
+        "$push": {"todos": {"id": str(uuid4()), "desc": todo_text}}}
+    res = USER_COLLECTION.update_one(filter=filter, update=add_todo_operation)
+    if res.modified_count == 1:
+        return True
+    return False

@@ -5,8 +5,8 @@
     <title>Todo</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="/static/css/dashboard.css" />
+    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/app.css') }}" />
 </head>
 
 <body>
@@ -17,15 +17,12 @@
                 <h2>TODO</h2>
             </header>
             <div class="new-todo-content">
-                <form action="/app/add-todo" , method="POST">
-                    <input type="hidden" id="token-input" name="token" value="{{ token }}">
-                    <div class="new-todo-content-text">
-                        <input type="text" , name="decs" value="" placeholder="Go for groceries" />
-                    </div>
-                    <div class="new-todo-content-add">
-                        <button type="submit">+</button>
-                    </div>
-                </form>
+                <div class="new-todo-content-text">
+                    <input id="todo-input" type="text" value="" placeholder="Add new todo" />
+                </div>
+                <div class="new-todo-content-add">
+                    <button id="todo-button" onclick="sendTodo()" disabled>+</button>
+                </div>
             </div>
             <div class="todo-content">
                 {% if user.todos|length > 0 %}
@@ -33,30 +30,26 @@
                     {% for todo in user.todos %}
                     <li class="todo-content-item">
                         <div class="item-name">
-                            <input type="hidden" id="{{todo.id}}" name="todo-id" value="{{ todo.id }}">
                             <p>{{ todo.desc }}</p>
                         </div>
                         <div class="item-action">
-                            <div class="item-action-edit"><button>edit</button></div>
-                            <div class="item-action-delete"><button>del</button></div>
+                            <div class="item-action-edit"><button onclick="editTodoById('{{ todo.id }}')">edit</button>
+                            </div>
+                            <div class="item-action-delete"><button
+                                    onclick="deleteTodoByID('{{ todo.id }}')">del</button></div>
                         </div>
                     </li>
                     {% endfor %}
                 </ol>
                 {% else %}
                 <div class="empty-todo">
-                    <h4 style="text-align: center;margin: 0.2rem;">No todos</h4>
+                    <h4 style="text-align: center;margin: 0.2rem;margin-top: 1rem;">No todos</h4>
                 </div>
                 {% endif %}
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
-    <script>
-        const token = Cookies.get("token");
-        console.log(token)
-        document.getElementById("token-input").value = token;
-    </script>
+    <script src="{{ url_for('static', path='js/app.js') }}"></script>
 </body>
 
 </html>

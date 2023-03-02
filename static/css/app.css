@@ -19,7 +19,7 @@
   margin: auto;
 }
 
-.new-todo-content form {
+.new-todo-content {
   padding: 0.1rem;
   display: flex;
   flex-direction: row;
@@ -30,7 +30,9 @@
 
 .new-todo-content-text {
   width: 100%;
-  border-radius: 0.2rem;}
+  border-radius: 0.2rem;
+  margin-right: 0.2rem;
+}
 
 .new-todo-content-text input:focus {
   outline: none;
@@ -54,6 +56,9 @@
 .new-todo-content button:hover {
   cursor: pointer;
   background-color: rgb(198, 198, 198);
+}
+.new-todo-content button:disabled {
+  cursor: not-allowed;
 }
 
 .todo-content-list {

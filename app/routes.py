@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Depends, status, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from utils.utils import validate_signup_data, hash_password, check_password, make_new_user_dict, validate_login_data, create_access_token
-from database.mongodb import insert_user, find_user_with_email, delete_todo_by_id, add_todo
+from database.mongodb import insert_user, find_user_with_email, delete_todo_by_id, add_todo, find_todo_by_id, edit_todo_by_email_todo_id
 from app.auth import get_current_user
 import json
 
@@ -76,6 +76,36 @@ async def handle_login(request: Request):
 
 # ============== Protected Routes ==============
 
+
+@api_router.post("/edit/{todo_id}")
+async def handle_edit_save(request: Request, todo_id, user_data=Depends(get_current_user)):
+    if user_data is None:
+        redirect_url = request.url_for("get_login")
+        return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)
+    user = user_data["user"]
+    req_body = await request.body()
+    new_todo = json.loads(req_body)
+    res = await edit_todo_by_email_todo_id(user["email"], todo_id, new_todo["todo"])
+    if res:
+        return Response(content="Todo edited succesfully", status_code=status.HTTP_200_OK)
+    else:
+        return Response(content="Todo eduting failed", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_router.get("/edit/{todo_id}")
+async def handle_edit(request: Request, todo_id, user_data=Depends(get_current_user)):
+    if user_data is None:
+        redirect_url = request.url_for("get_login")
+        return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)
+    user = user_data["user"]
+    todo = await find_todo_by_id(user["email"], todo_id)
+    if todo is None:
+        redirect_url = request.url_for("handle_app")
+        return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)
+    else:
+        return templates.TemplateResponse("edit.html", {"request": request, "todo": todo})
+
+
 @api_router.post("/add")
 async def handle_add(request: Request, user_data=Depends(get_current_user)):
     if user_data is None:
@@ -91,7 +121,6 @@ async def handle_add(request: Request, user_data=Depends(get_current_user)):
     else:
         return Response(content="Todo adding failed", status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    
 
 @api_router.delete("/delete/{todo_id}")
 async def handle_delete(request: Request, todo_id, user_data=Depends(get_current_user)):
@@ -114,3 +143,13 @@ async def handle_app(request: Request, user_data=Depends(get_current_user)):
     app_response = templates.TemplateResponse(
         "app.html", {"request": request, "user": user_data["user"]})
     return app_response
+
+
+@api_router.get("/{path:path}")
+async def handle_incorrect_route(request: Request, user_data=Depends(get_current_user)):
+    if user_data is None:
+        redirect_url = request.url_for("get_login")
+        return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)
+    else:
+        redirect_url = request.url_for("handle_app")
+        return RedirectResponse(url=redirect_url, status_code=status.HTTP_302_FOUND)

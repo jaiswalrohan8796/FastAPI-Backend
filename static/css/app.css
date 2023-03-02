@@ -47,11 +47,12 @@
 
 .new-todo-content button {
   background-color: rgb(237, 237, 237);
+  color: black;
   height: 2rem;
   width: 2rem;
   border-radius: 0.3rem;
   border: none;
-  font-size: 1.4rem;
+  font-size: 0.7rem;
 }
 .new-todo-content button:hover {
   cursor: pointer;
@@ -118,4 +119,12 @@
 .todo-content-list .item-action div button:hover {
   cursor: pointer;
   background-color: rgb(198, 198, 198);
+}
+
+a.button-link {
+  text-decoration: none;
+  color: black;
+}
+a.button-link:hover {
+  text-decoration: none;
 }

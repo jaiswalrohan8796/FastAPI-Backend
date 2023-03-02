@@ -41,13 +41,6 @@ async function sendTodo() {
 }
 
 //edit todo by id
-
 async function editTodoById(todo_id) {
-    const res = await fetch(`/edit/${todo_id}`, { method: "GET" });
-    if (res.status == 200) {
-        console.log(`Success to delete item ${todo_id}`);
-        location.reload();
-    } else {
-        console.log(`Failed to delete item ${todo_id}`);
-    }
+    location.href = `/edit/${todo_id}`;
 }

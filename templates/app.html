@@ -21,7 +21,7 @@
                     <input id="todo-input" type="text" value="" placeholder="Add new todo" />
                 </div>
                 <div class="new-todo-content-add">
-                    <button id="todo-button" onclick="sendTodo()" disabled>+</button>
+                    <button id="todo-button" onclick="sendTodo()" disabled>Add</button>
                 </div>
             </div>
             <div class="todo-content">
@@ -33,10 +33,11 @@
                             <p>{{ todo.desc }}</p>
                         </div>
                         <div class="item-action">
-                            <div class="item-action-edit"><button onclick="editTodoById('{{ todo.id }}')">edit</button>
+                            <div class="item-action-edit"><button><a class="button-link"
+                                        href="/edit/{{todo.id}}">Edit</a></button>
                             </div>
                             <div class="item-action-delete"><button
-                                    onclick="deleteTodoByID('{{ todo.id }}')">del</button></div>
+                                    onclick="deleteTodoByID('{{ todo.id }}')">Del</button></div>
                         </div>
                     </li>
                     {% endfor %}

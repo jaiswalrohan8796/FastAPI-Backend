@@ -1,8 +1,6 @@
-from uuid import UUID
-from pydantic import BaseModel
 from typing import Union, Any
 from datetime import datetime
-from fastapi import Depends, HTTPException, Request
+from fastapi import Request
 from utils.utils import config
 from jose import jwt
 from pydantic import ValidationError

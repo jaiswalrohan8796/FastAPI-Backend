@@ -6,6 +6,7 @@ from database.mongodb import insert_user, find_user_with_email, delete_todo_by_i
 from app.auth import get_current_user
 import json
 
+
 # app configurations
 templates = Jinja2Templates(directory="templates")
 api_router = APIRouter()
